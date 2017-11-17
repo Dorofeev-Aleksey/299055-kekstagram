@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Дорофеев](https://up.htmlacademy.ru/javascript/11/user/299055).
-* Наставник: `Неизвестно`.
+* Наставник: [Мартин Шульц](https://htmlacademy.ru/profile/id201567).
 
 ---
 
