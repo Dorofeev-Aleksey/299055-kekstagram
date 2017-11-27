@@ -31,8 +31,8 @@ var renderPhoto = function (photo) {
 
 var fragment = document.createDocumentFragment();
 
-for (var i = 0; i < photos.length; i++) {
-  fragment.appendChild(renderPhoto(photos[i]));
+for (var j = 0; j < photos.length; j++) {
+  fragment.appendChild(renderPhoto(photos[j]));
 }
 
 picturesList.appendChild(fragment);
@@ -42,4 +42,4 @@ galleryOverlay.classList.remove('hidden');
 
 galleryOverlay.querySelector('.gallery-overlay-image').src = photos[0].url;
 galleryOverlay.querySelector('.likes-count').textContent = photos[0].likes;
-galleryOverlay.querySelector('.comments-count').textContent = photos[0].commets;
+galleryOverlay.querySelector('.comments-count').textContent = '1';
