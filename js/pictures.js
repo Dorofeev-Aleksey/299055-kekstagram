@@ -10,7 +10,7 @@ function getRandomInRange(min, max) {
 
 var photos = [];
 
-//---Формируем массив данных
+ // ---Формируем массив данных
 for (var i = 0; i < 25; i++) {
   photos[i] = {
     url: 'photos/' + (i + 1) + '.jpg',
@@ -18,7 +18,7 @@ for (var i = 0; i < 25; i++) {
     commets: COMMENTS[getRandomInRange(0, COMMENTS.length - 1)]
   };
 }
-//---Создания шаблона и вставка в разметку
+ // ---Создания шаблона и вставка в разметку
 var picturesList = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture-template').content;
 
@@ -40,7 +40,7 @@ for (var j = 0; j < photos.length; j++) {
 
 picturesList.appendChild(fragment);
 
-//---Показ крупного плана, отприсовка картинки крупным планом
+ // ---Показ крупного плана, отприсовка картинки крупным планом
 var galleryOverlay = document.querySelector('.gallery-overlay');
 var pictureItems = document.querySelectorAll('.picture');
 var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
@@ -85,8 +85,8 @@ for (i = 0; i < pictureItems.length; i++) {
   });
 }
 
-galleryOverlayClose.addEventListener('click', function (evt) {
-    closePopup();
+galleryOverlayClose.addEventListener('click', function () {
+  closePopup();
 });
 
 galleryOverlayClose.addEventListener('keydown', function (evt) {
@@ -95,7 +95,7 @@ galleryOverlayClose.addEventListener('keydown', function (evt) {
   }
 });
 
-//--- Взаимодействие с редактором фото
+ //  --- Взаимодействие с редактором фото
 var uploadInput = document.querySelector('.upload-input');
 var uploadOverlay = document.querySelector('.upload-overlay');
 var uploadFormCancel = document.querySelector('.upload-form-cancel');
@@ -122,20 +122,20 @@ var closeOverlay = function () {
   document.removeEventListener('keydown', onOverlayEscPress);
 };
 
-uploadInput.addEventListener('change', function() {
+uploadInput.addEventListener('change', function () {
   openOverlay();
 });
 
-uploadFormCancel.addEventListener('click', function() {
+uploadFormCancel.addEventListener('click', function () {
   closeOverlay();
 });
 
-//---Наложение фильтров
+ // ---Наложение фильтров
 var effectButtons = document.querySelectorAll('.upload-effect-input');
 var imagePreview = document.getElementById('effect-image-preview');
 
 var onEffectPress = function (evt) {
-  for (var i = 0; i < effectButtons.length; i++) {
+  for (i = 0; i < effectButtons.length; i++) {
     var effectClass = effectButtons[i].id;
     effectClass = effectClass.substr(7) + '';
     imagePreview.classList.remove(effectClass);
@@ -148,16 +148,16 @@ var onEffectPress = function (evt) {
   }
 };
 
-for (var i = 0; i < effectButtons.length; i++) {
+for (i = 0; i < effectButtons.length; i++) {
   effectButtons[i].addEventListener('change', onEffectPress);
 }
 
-//---Изменение масштаба изображения
+ // ---Изменение масштаба изображения
 var buttonSizeDec = document.querySelector('.upload-resize-controls-button-dec');
 var buttonSizeInc = document.querySelector('.upload-resize-controls-button-inc');
 var controlSizeValue = document.querySelector('.upload-resize-controls-value');
 
-buttonSizeDec.addEventListener('click', function() {
+buttonSizeDec.addEventListener('click', function () {
   var valueSize1 = controlSizeValue.value;
   if (valueSize1 == 25) {
     return;
@@ -167,7 +167,7 @@ buttonSizeDec.addEventListener('click', function() {
   }
 });
 
-buttonSizeInc.addEventListener('click', function() {
+buttonSizeInc.addEventListener('click', function () {
   var valueSize2 = Number(controlSizeValue.value);
   if (valueSize2 == 100) {
     return;
@@ -178,11 +178,11 @@ buttonSizeInc.addEventListener('click', function() {
   }
 });
 
-//---Валидация хэш-тэгов
+ // ---Валидация хэш-тэгов
 
 var inputHashtag = document.querySelector('.upload-form-hashtags');
 
-inputHashtag.addEventListener('click', function(evt) {
+inputHashtag.addEventListener('click', function () {
   var hashTags = inputHashtag.value.split(/\s+/g);
   if (hashTags.length > 5) {
     inputHashtag.setCustomValidity('Нельзя указать больше 5 хэш-тегов');
