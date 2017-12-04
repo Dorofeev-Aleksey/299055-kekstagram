@@ -130,18 +130,63 @@ uploadFormCancel.addEventListener('click', function() {
   closeOverlay();
 });
 
+//---Наложение фильтров
 var effectButtons = document.querySelectorAll('.upload-effect-input');
-var imagePreview = document.querySelector('.effect-image-preview');
+var imagePreview = document.getElementById('effect-image-preview');
 
 var onEffectPress = function (evt) {
-  if (evt.target.checked) {
-    var effectButtonsId = evt.target.id;
-    effectButtonsId= effectButtonsId.substr(7) + '';
-    imagePreview.classList.add(effectButtonsId);
+  for (var i = 0; i < effectButtons.length; i++) {
+    var effectClass = effectButtons[i].id;
+    effectClass = effectClass.substr(7) + '';
+    imagePreview.classList.remove(effectClass);
+
+    if (evt.target.checked) {
+      var effectButtonsId = evt.target.id;
+      effectButtonsId= effectButtonsId.substr(7) + '';
+      imagePreview.classList.add(effectButtonsId);
+    }
   }
 };
 
 for (var i = 0; i < effectButtons.length; i++) {
-  var effectButtonsId = effectButtons[i].id;
   effectButtons[i].addEventListener('change', onEffectPress);
 }
+
+//---Изменение масштаба изображения
+var buttonSizeDec = document.querySelector('.upload-resize-controls-button-dec');
+var buttonSizeInc = document.querySelector('.upload-resize-controls-button-inc');
+var controlSizeValue = document.querySelector('.upload-resize-controls-value');
+
+buttonSizeDec.addEventListener('click', function() {
+  var valueSize1 = controlSizeValue.value;
+  if (valueSize1 == 25) {
+    return;
+  } else {
+    controlSizeValue.value = controlSizeValue.value - 25;
+    imagePreview.style.transform = 'scale(' + controlSizeValue.value / 100 + ')';
+  }
+});
+
+buttonSizeInc.addEventListener('click', function() {
+  var valueSize2 = Number(controlSizeValue.value);
+  if (valueSize2 == 100) {
+    return;
+  } else {
+    valueSize2 = valueSize2 + 25;
+    controlSizeValue.value = valueSize2;
+    imagePreview.style.transform = 'scale(' + controlSizeValue.value / 100 + ')';
+  }
+});
+
+//---Валидация хэш-тэгов
+
+var inputHashtag = document.querySelector('.upload-form-hashtags');
+
+inputHashtag.addEventListener('click', function(evt) {
+  var hashTags = inputHashtag.value.split(/\s+/g);
+  if (hashTags.length > 5) {
+    inputHashtag.setCustomValidity('Нельзя указать больше 5 хэш-тегов');
+  } else {
+    inputHashtag.setCustomValidity('');
+  }
+});
