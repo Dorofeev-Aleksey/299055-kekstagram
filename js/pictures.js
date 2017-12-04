@@ -182,7 +182,7 @@ buttonSizeInc.addEventListener('click', function () {
 
 var inputHashtag = document.querySelector('.upload-form-hashtags');
 
-inputHashtag.addEventListener('click', function () {
+inputHashtag.addEventListener('invalid', function () {
   var hashTags = inputHashtag.value.split(/\s+/g);
   if (hashTags.length > 5) {
     inputHashtag.setCustomValidity('Нельзя указать больше 5 хэш-тегов');
