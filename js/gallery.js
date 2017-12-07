@@ -32,14 +32,13 @@
     });
   }
 
-galleryOverlayClose.addEventListener('click', function () {
-    window.preview.closePopup();
+  galleryOverlayClose.addEventListener('click', function () {
+      window.preview.closePopup();
   });
 
-galleryOverlayClose.addEventListener('keydown', function (evt) {
+  galleryOverlayClose.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.preview.ENTER_KEYCODE) {
       window.preview.closePopup();
     }
   });
-
 })();

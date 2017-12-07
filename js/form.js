@@ -8,7 +8,7 @@
 
   var onOverlayEscPress = function (evt) {
     var focused = document.activeElement;
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.preview.ESC_KEYCODE) {
       if (focused === uploadFormDescription) {
         focused.blur();
       } else {
@@ -35,7 +35,7 @@
     closeOverlay();
   });
 
-   // ---Наложение фильтров
+  // ---Наложение фильтров
   var effectButtons = document.querySelectorAll('.upload-effect-input');
   var imagePreview = document.getElementById('effect-image-preview');
 
@@ -47,7 +47,7 @@
 
       if (evt.target.checked) {
         var effectButtonsId = evt.target.id;
-        effectButtonsId= effectButtonsId.substr(7) + '';
+        effectButtonsId = effectButtonsId.substr(7) + '';
         imagePreview.classList.add(effectButtonsId);
       }
     }
@@ -57,7 +57,7 @@
     effectButtons[i].addEventListener('change', onEffectPress);
   }
 
-   // ---Изменение масштаба изображения
+  // ---Изменение масштаба изображения
   var buttonResizeDec = document.querySelector('.upload-resize-controls-button-dec');
   var buttonResizeInc = document.querySelector('.upload-resize-controls-button-inc');
   var controlSizeValue = document.querySelector('.upload-resize-controls-value');
@@ -81,7 +81,7 @@
   buttonResizeDec.addEventListener('click', buttonResizeClickHandler);
   buttonResizeInc.addEventListener('click', buttonResizeClickHandler);
 
-   // ---Валидация хэш-тэгов
+  // ---Валидация хэш-тэгов
 
   var inputHashtag = document.querySelector('.upload-form-hashtags');
 
