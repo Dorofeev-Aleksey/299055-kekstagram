@@ -153,40 +153,84 @@ for (i = 0; i < effectButtons.length; i++) {
 }
 
  // ---Изменение масштаба изображения
-var buttonSizeDec = document.querySelector('.upload-resize-controls-button-dec');
-var buttonSizeInc = document.querySelector('.upload-resize-controls-button-inc');
+var buttonResizeDec = document.querySelector('.upload-resize-controls-button-dec');
+var buttonResizeInc = document.querySelector('.upload-resize-controls-button-inc');
 var controlSizeValue = document.querySelector('.upload-resize-controls-value');
 
-buttonSizeDec.addEventListener('click', function () {
-  var valueSize1 = controlSizeValue.value;
-  if (valueSize1 == 25) {
-    return;
-  } else {
-    controlSizeValue.value = controlSizeValue.value - 25;
-    imagePreview.style.transform = 'scale(' + controlSizeValue.value / 100 + ')';
-  }
-});
+var STEP_RESIZE = 25;
+var MIN_RESIZE = 25;
+var MAX_RESIZE = 100;
 
-buttonSizeInc.addEventListener('click', function () {
-  var valueSize2 = Number(controlSizeValue.value);
-  if (valueSize2 == 100) {
-    return;
-  } else {
-    valueSize2 = valueSize2 + 25;
-    controlSizeValue.value = valueSize2;
-    imagePreview.style.transform = 'scale(' + controlSizeValue.value / 100 + ')';
+var buttonResizeClickHandler = function (evt) {
+  var step = STEP_RESIZE;
+  if (evt.currentTarget === buttonResizeDec) {
+    step = -step;
   }
-});
+  var value = parseInt(controlSizeValue.value, 10) + step;
+  if (value >= MIN_RESIZE && value <= MAX_RESIZE) {
+    controlSizeValue.value = value + '%';
+    imagePreview.style.transform = 'scale(' + value * 0.01 + ')';
+  }
+};
+
+buttonResizeDec.addEventListener('click', buttonResizeClickHandler);
+buttonResizeInc.addEventListener('click', buttonResizeClickHandler);
 
  // ---Валидация хэш-тэгов
 
 var inputHashtag = document.querySelector('.upload-form-hashtags');
 
-inputHashtag.addEventListener('invalid', function () {
-  var hashTags = inputHashtag.value.split(/\s+/g);
-  if (hashTags.length > 5) {
-    inputHashtag.setCustomValidity('Нельзя указать больше 5 хэш-тегов');
+var validateHashtags = function (value) {
+  var MAX_HASHTAGS = 5;
+  var MAX_LENGTH_HASHTAG = 20;
+  var MIN_LENGTH_HASHTAG = 2;
+  var errorMessage = '';
+
+  value = value.toLowerCase();
+  var array = value.split(/\s+/g);
+
+  if (array.length > MAX_HASHTAGS) {
+    errorMessage += 'Не больше 5 хэш-тегов.\n';
+  }
+
+  for (i = 0; i < array.length; i++) {
+    if (array[i].length > MAX_LENGTH_HASHTAG) {
+      errorMessage += 'Длина хэш-тега не больше 20 символов.\n';
+      break;
+    }
+
+    if (array[i][0] !== '#') {
+      errorMessage += 'Хэш-тег должен начинаться с символа "#".\n';
+      break;
+    }
+
+    if (array[i].length < MIN_LENGTH_HASHTAG + 1) {
+      errorMessage += 'После символа "#" минимум ' + MIN_LENGTH_HASHTAG + ' знака.\n';
+      break;
+    }
+
+    if (array[0].indexOf('#', 1) >= 0) {
+      errorMessage += 'Хэш-теги отделяются пробелом.\n';
+      break;
+    }
+  }
+
+  for (i = 0; i < array.length - 1; i++) {
+    if (~array.indexOf(array[i], i + 1)) {
+      errorMessage += 'Запрещены повторяющие хэш-теги\n';
+      break;
+    }
+  }
+
+  if (errorMessage) {
+    inputHashtag.setCustomValidity(errorMessage);
   } else {
     inputHashtag.setCustomValidity('');
+    inputHashtag.style.border = '';
   }
+
+};
+
+inputHashtag.addEventListener('input', function () {
+  validateHashtags(inputHashtag.value);
 });
