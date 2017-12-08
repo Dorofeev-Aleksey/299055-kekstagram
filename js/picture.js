@@ -4,7 +4,7 @@
   var pictureTemplate = document.querySelector('#picture-template').content;
 
   window.picture = {
-    renderPhoto:  function (photo) {
+    renderPhoto: function (photo) {
       var pictureElement = pictureTemplate.cloneNode(true);
 
       pictureElement.querySelector('.picture img').src = photo.url;
