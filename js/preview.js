@@ -2,9 +2,7 @@
 
 (function () {
   var galleryOverlay = document.querySelector('.gallery-overlay');
-  var pictureItems = document.querySelectorAll('.picture');
   var ESC_KEYCODE = 27;
-  var ENTER_KEYCODE = 13;
 
   window.preview = {
     onPopupEscPress: function (evt) {

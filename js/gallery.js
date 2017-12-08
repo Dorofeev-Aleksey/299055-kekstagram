@@ -33,7 +33,7 @@
   }
 
   galleryOverlayClose.addEventListener('click', function () {
-      window.preview.closePopup();
+    window.preview.closePopup();
   });
 
   galleryOverlayClose.addEventListener('keydown', function (evt) {
