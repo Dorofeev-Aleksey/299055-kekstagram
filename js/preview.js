@@ -23,7 +23,7 @@
       galleryOverlay.querySelector('.likes-count').textContent = usedPicture.querySelector('.picture-likes').textContent;
       galleryOverlay.querySelector('.comments-count').textContent = '1';
     },
-    ESC_KEYCODE: 27,
+    ESC_KEYCODE: ESC_KEYCODE,
     ENTER_KEYCODE: 13
   };
 })();
