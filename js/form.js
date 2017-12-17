@@ -11,6 +11,7 @@
   var effectLevelPinElement = uploadLevelElement.querySelector('.upload-effect-level-pin');
   var effectLevelLineElement = uploadLevelElement.querySelector('.upload-effect-level-val');
   var uploadControlsElement = document.querySelector('.upload-effect-controls');
+  var imagePreview = document.getElementById('effect-image-preview');
 
   uploadLevelInputElement.classList.add('hidden');
 
@@ -46,61 +47,36 @@
   });
 
   // ---Наложение фильтров
-  var effectButtons = document.querySelectorAll('.upload-effect-input');
-  var imagePreview = document.getElementById('effect-image-preview');
 
-  var onEffectPress = function (evt) {
-    for (i = 0; i < effectButtons.length; i++) {
-      var effectClass = effectButtons[i].id;
-      effectClass = effectClass.substr(7) + '';
-      imagePreview.classList.remove(effectClass);
+  var effectContainer = document.querySelector('.upload-effect__container');
 
-      if (evt.target.checked) {
-        var newPercent = 100;
-        checkFilter(newPercent);
-        effectLevelPinElement.style.left = newPercent + '%';
-        effectLevelLineElement.style.width = newPercent + '%';
-        uploadLevelInputElement.value = Math.round(newPercent);
-
-        var effectButtonsId = evt.target.id;
-        if (effectButtonsId === "upload-effect-none") {
-          uploadLevelElement.classList.add('hidden');
-        } else {
-          uploadLevelElement.classList.remove('hidden');
-        }
-        effectButtonsId = effectButtonsId.substr(7) + '';
-        imagePreview.classList.add(effectButtonsId);
-      }
-    }
+  var filterDefault = function (percent) {
+    effectLevelPinElement.style.left = percent + '%';
+    effectLevelLineElement.style.width = percent + '%';
+    uploadLevelInputElement.value = Math.round(percent);
   };
 
-  for (var i = 0; i < effectButtons.length; i++) {
-    effectButtons[i].addEventListener('change', onEffectPress);
-  }
+  var applyFilter = function (targetId) {
+    if (targetId === "upload-effect-none") {
+      uploadLevelElement.classList.add('hidden');
+    } else {
+      uploadLevelElement.classList.remove('hidden');
+    }
+    targetId = targetId.substr(7) + '';
+    imagePreview.classList.add(targetId);
+  };
+
+  window.initializeFilters(effectContainer, checkFilter, filterDefault, applyFilter);
 
   // ---Изменение масштаба изображения
-  var buttonResizeDec = document.querySelector('.upload-resize-controls-button-dec');
-  var buttonResizeInc = document.querySelector('.upload-resize-controls-button-inc');
-  var controlSizeValue = document.querySelector('.upload-resize-controls-value');
 
-  var STEP_RESIZE = 25;
-  var MIN_RESIZE = 25;
-  var MAX_RESIZE = 100;
+  var scaleElement = document.querySelector('.upload-resize-controls');
 
-  var buttonResizeClickHandler = function (evt) {
-    var step = STEP_RESIZE;
-    if (evt.currentTarget === buttonResizeDec) {
-      step = -step;
-    }
-    var value = parseInt(controlSizeValue.value, 10) + step;
-    if (value >= MIN_RESIZE && value <= MAX_RESIZE) {
-      controlSizeValue.value = value + '%';
-      imagePreview.style.transform = 'scale(' + value * 0.01 + ')';
-    }
+  var adjustScale = function(scale) {
+    imagePreview.style.transform = 'scale(' + scale / 100 + ')';
   };
 
-  buttonResizeDec.addEventListener('click', buttonResizeClickHandler);
-  buttonResizeInc.addEventListener('click', buttonResizeClickHandler);
+  window.initializeScale(scaleElement, adjustScale);
 
   // ---Валидация хэш-тэгов
 
