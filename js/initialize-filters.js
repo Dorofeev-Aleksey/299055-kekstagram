@@ -14,7 +14,7 @@
           filterDefault(newPercent);
 
           var effectButtonsId = evt.target.id;
-          applyFilter(effectButtonsId)
+          applyFilter(effectButtonsId);
         }
       }
     };

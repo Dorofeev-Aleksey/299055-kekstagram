@@ -64,7 +64,7 @@
   };
 
   var applyFilter = function (targetId) {
-    if (targetId === "upload-effect-none") {
+    if (targetId === 'upload-effect-none') {
       uploadLevelElement.classList.add('hidden');
     } else {
       uploadLevelElement.classList.remove('hidden');
@@ -79,7 +79,7 @@
 
   var scaleElement = document.querySelector('.upload-resize-controls');
 
-  var adjustScale = function(scale) {
+  var adjustScale = function (scale) {
     imagePreview.style.transform = 'scale(' + scale / 100 + ')';
   };
 
@@ -159,7 +159,7 @@
     var scopeEffectLevelPin = getCoordsScope(scopeElement);
     var newPercent = (mouseX - scopeEffectLevelPin.left) * 100 / (scopeEffectLevelPin.right - scopeEffectLevelPin.left);
 
-    if(newPercent > 0 && newPercent < 100) {
+    if (newPercent > 0 && newPercent < 100) {
       effectLevelPinElement.style.left = newPercent + '%';
       effectLevelLineElement.style.width = newPercent + '%';
       uploadLevelInputElement.value = Math.round(newPercent);
