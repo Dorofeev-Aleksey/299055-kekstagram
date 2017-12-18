@@ -146,7 +146,7 @@
 
   // Ползунок фильтров
 
-  function getCoordsScope (elem) {
+  function getCoordsScope(elem) {
     var box = elem.getBoundingClientRect();
 
     return {
@@ -155,7 +155,7 @@
     };
   }
 
-  function getCoordsPin (mouseX) {
+  function getCoordsPin(mouseX) {
     var scopeEffectLevelPin = getCoordsScope(scopeElement);
     var newPercent = (mouseX - scopeEffectLevelPin.left) * 100 / (scopeEffectLevelPin.right - scopeEffectLevelPin.left);
 
