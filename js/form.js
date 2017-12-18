@@ -13,6 +13,7 @@
   var uploadControlsElement = document.querySelector('.upload-effect-controls');
   var imagePreview = document.getElementById('effect-image-preview');
 
+
   uploadLevelInputElement.classList.add('hidden');
 
   var onOverlayEscPress = function (evt) {
@@ -44,6 +45,12 @@
 
   uploadFormCancel.addEventListener('click', function () {
     closeOverlay();
+  });
+
+  var form = document.querySelector('.upload-form');
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), window.backend.onSuccess, window.backend.errorHandler);
   });
 
   // ---Наложение фильтров
@@ -95,7 +102,7 @@
       errorMessage += 'Не больше 5 хэш-тегов.\n';
     }
 
-    for (i = 0; i < array.length; i++) {
+    for (var i = 0; i < array.length; i++) {
       if (array[i].length > MAX_LENGTH_HASHTAG) {
         errorMessage += 'Длина хэш-тега не больше 20 символов.\n';
         break;

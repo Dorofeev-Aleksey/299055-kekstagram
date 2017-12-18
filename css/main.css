@@ -864,3 +864,25 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
 .footer-social-item-vk {
   background-position: -84px 0;
 }
+
+/*Custom Styles */
+.form-alert {
+  font-size: 20px;
+  font-weight: bolder;
+  background-color: red;
+  position: fixed;
+  z-index: 9;
+  left: 50%;
+  top: 0;
+  width: 600px;
+  margin-left: -300px;
+  padding: 40px;
+  box-sizing: border-box;
+  transform: translateY(-100%);
+  transition: all .2s ease;
+  opacity: 0;
+}
+  .form-alert--show {
+    transform: translateY(0);
+    opacity: 1;
+  }

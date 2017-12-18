@@ -3,13 +3,15 @@
 (function () {
   var picturesList = document.querySelector('.pictures');
 
-  var fragment = document.createDocumentFragment();
+  var successHandler = function (data) {
+    var fragment = document.createDocumentFragment();
+    for (var j = 0; j < 25; j++) {
+      fragment.appendChild(window.picture.renderPhoto(data[j]));
+    }
+    picturesList.appendChild(fragment);
+  };
 
-  for (var j = 0; j < window.data.length; j++) {
-    fragment.appendChild(window.picture.renderPhoto(window.data[j]));
-  }
-
-  picturesList.appendChild(fragment);
+  window.backend.load(successHandler, window.backend.errorHandler);
 
   var pictureItems = document.querySelectorAll('.picture');
   var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
