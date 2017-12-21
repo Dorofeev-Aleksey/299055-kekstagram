@@ -12,7 +12,14 @@
   var effectLevelLineElement = uploadLevelElement.querySelector('.upload-effect-level-val');
   var uploadControlsElement = document.querySelector('.upload-effect-controls');
   var imagePreview = document.getElementById('effect-image-preview');
+  var uploadResizeValue = document.querySelector('.upload-resize-controls-value');
+  var uploadOverlayCloseBtn = uploadOverlay.querySelector('.upload-form-cancel');
+  var inputHashtag = document.querySelector('.upload-form-hashtags');
+  var inputEffectNone = document.querySelector('.upload-effect-none');
 
+  var MAX_EFFECT_VALUE = 100;
+  var MIN_EFFECT_VALUE = 0;
+  var DEFAULT_EFFECT_VALUE = 100;
 
   uploadLevelInputElement.classList.add('hidden');
 
@@ -22,35 +29,66 @@
       if (focused === uploadFormDescription) {
         focused.blur();
       } else {
+        setDefaultForm();
+        clearEffect();
         closeOverlay();
       }
     }
   };
 
+  var clearEffect = function () {
+    imagePreview.className = 'effect-image-preview'; // по умолчанию без фильтра
+    imagePreview.style.transform = '';
+    imagePreview.style.filter = '';
+    uploadLevelElement.classList.add('hidden');
+  };
+
+  var setDefaultForm = function () {
+    uploadLevelElement.classList.add('hidden');
+    uploadLevelInputElement.style.display = 'none';
+    uploadLevelInputElement.setAttribute('max', MAX_EFFECT_VALUE);
+    uploadLevelInputElement.setAttribute('min', MIN_EFFECT_VALUE);
+    uploadLevelInputElement.setAttribute('value', DEFAULT_EFFECT_VALUE);
+    effectLevelPinElement.style.left = '100%';
+    effectLevelLineElement.style.width = '100%';
+    imagePreview.style = '';
+    uploadResizeValue.value = '100%';
+    inputHashtag.value = '';
+    uploadFormDescription.value = '';
+  };
+
   var openOverlay = function () {
     uploadOverlay.classList.remove('hidden');
     uploadLevelElement.classList.add('hidden');
+    clearEffect();
     document.addEventListener('keydown', onOverlayEscPress);
   };
 
   var closeOverlay = function () {
     uploadOverlay.classList.add('hidden');
+    setDefaultForm();
+    clearEffect();
     document.removeEventListener('keydown', onOverlayEscPress);
   };
 
   uploadInput.addEventListener('change', function () {
+    setDefaultForm();
+    clearEffect();
     openOverlay();
-
   });
 
   uploadFormCancel.addEventListener('click', function () {
+    setDefaultForm();
+    clearEffect();
     closeOverlay();
   });
 
   var form = document.querySelector('.upload-form');
   form.addEventListener('submit', function (evt) {
-    evt.preventDefault();
+    validateHashtags(inputHashtag.value);
     window.backend.save(new FormData(form), window.backend.onSuccess, window.backend.errorHandler);
+    evt.preventDefault();
+    clearEffect();
   });
 
   // ---Наложение фильтров
@@ -86,8 +124,6 @@
   window.initializeScale(scaleElement, adjustScale);
 
   // ---Валидация хэш-тэгов
-
-  var inputHashtag = document.querySelector('.upload-form-hashtags');
 
   var validateHashtags = function (value) {
     var MAX_HASHTAGS = 5;
@@ -133,6 +169,7 @@
 
     if (errorMessage) {
       inputHashtag.setCustomValidity(errorMessage);
+      inputHashtag.style.borderColor = 'red';
     } else {
       inputHashtag.setCustomValidity('');
       inputHashtag.style.border = '';
