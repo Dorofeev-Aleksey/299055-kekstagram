@@ -22,6 +22,7 @@
   var DEFAULT_EFFECT_VALUE = 100;
 
   uploadLevelInputElement.classList.add('hidden');
+  uploadOverlayCloseBtn.setAttribute('style', 'font-size: 0;');
 
   var onOverlayEscPress = function (evt) {
     var focused = document.activeElement;
@@ -55,12 +56,14 @@
     uploadResizeValue.value = '100%';
     inputHashtag.value = '';
     uploadFormDescription.value = '';
+    inputEffectNone.checked = true;
   };
 
   var openOverlay = function () {
     uploadOverlay.classList.remove('hidden');
     uploadLevelElement.classList.add('hidden');
     clearEffect();
+    setDefaultForm();
     document.addEventListener('keydown', onOverlayEscPress);
   };
 
@@ -88,7 +91,6 @@
     validateHashtags(inputHashtag.value);
     window.backend.save(new FormData(form), window.backend.onSuccess, window.backend.errorHandler);
     evt.preventDefault();
-    clearEffect();
   });
 
   // ---Наложение фильтров
