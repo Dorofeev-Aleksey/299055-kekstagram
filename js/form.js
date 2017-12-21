@@ -15,7 +15,7 @@
   var uploadResizeValue = document.querySelector('.upload-resize-controls-value');
   var uploadOverlayCloseBtn = uploadOverlay.querySelector('.upload-form-cancel');
   var inputHashtag = document.querySelector('.upload-form-hashtags');
-  var inputEffectNone = document.querySelector('.upload-effect-none');
+  var inputEffectNone = document.querySelector('#upload-effect-none');
 
   var MAX_EFFECT_VALUE = 100;
   var MIN_EFFECT_VALUE = 0;
