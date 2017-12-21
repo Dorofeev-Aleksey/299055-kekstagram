@@ -57,6 +57,7 @@
     inputHashtag.value = '';
     uploadFormDescription.value = '';
     inputEffectNone.checked = true;
+    inputHashtag.style.border = '';
   };
 
   var openOverlay = function () {
@@ -91,6 +92,7 @@
     validateHashtags(inputHashtag.value);
     window.backend.save(new FormData(form), window.backend.onSuccess, window.backend.errorHandler);
     evt.preventDefault();
+    uploadInput.value = null;
   });
 
   // ---Наложение фильтров
