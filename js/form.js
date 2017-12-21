@@ -12,8 +12,17 @@
   var effectLevelLineElement = uploadLevelElement.querySelector('.upload-effect-level-val');
   var uploadControlsElement = document.querySelector('.upload-effect-controls');
   var imagePreview = document.getElementById('effect-image-preview');
+  var uploadResizeValue = document.querySelector('.upload-resize-controls-value');
+  var uploadOverlayCloseBtn = uploadOverlay.querySelector('.upload-form-cancel');
+  var inputHashtag = document.querySelector('.upload-form-hashtags');
+  var inputEffectNone = document.querySelector('#upload-effect-none');
+
+  var MAX_EFFECT_VALUE = 100;
+  var MIN_EFFECT_VALUE = 0;
+  var DEFAULT_EFFECT_VALUE = 100;
 
   uploadLevelInputElement.classList.add('hidden');
+  uploadOverlayCloseBtn.setAttribute('style', 'font-size: 0;');
 
   var onOverlayEscPress = function (evt) {
     var focused = document.activeElement;
@@ -21,29 +30,69 @@
       if (focused === uploadFormDescription) {
         focused.blur();
       } else {
+        setDefaultForm();
+        clearEffect();
         closeOverlay();
       }
     }
   };
 
+  var clearEffect = function () {
+    imagePreview.className = 'effect-image-preview'; // по умолчанию без фильтра
+    imagePreview.style.transform = '';
+    imagePreview.style.filter = '';
+    uploadLevelElement.classList.add('hidden');
+  };
+
+  var setDefaultForm = function () {
+    uploadLevelElement.classList.add('hidden');
+    uploadLevelInputElement.style.display = 'none';
+    uploadLevelInputElement.setAttribute('max', MAX_EFFECT_VALUE);
+    uploadLevelInputElement.setAttribute('min', MIN_EFFECT_VALUE);
+    uploadLevelInputElement.setAttribute('value', DEFAULT_EFFECT_VALUE);
+    effectLevelPinElement.style.left = '100%';
+    effectLevelLineElement.style.width = '100%';
+    imagePreview.style = '';
+    uploadResizeValue.value = '100%';
+    inputHashtag.value = '';
+    uploadFormDescription.value = '';
+    inputEffectNone.checked = true;
+    inputHashtag.style.border = '';
+  };
+
   var openOverlay = function () {
     uploadOverlay.classList.remove('hidden');
     uploadLevelElement.classList.add('hidden');
+    clearEffect();
+    setDefaultForm();
     document.addEventListener('keydown', onOverlayEscPress);
   };
 
   var closeOverlay = function () {
     uploadOverlay.classList.add('hidden');
+    setDefaultForm();
+    clearEffect();
     document.removeEventListener('keydown', onOverlayEscPress);
   };
 
   uploadInput.addEventListener('change', function () {
+    setDefaultForm();
+    clearEffect();
     openOverlay();
-
   });
 
   uploadFormCancel.addEventListener('click', function () {
+    setDefaultForm();
+    clearEffect();
     closeOverlay();
+  });
+
+  var form = document.querySelector('.upload-form');
+  form.addEventListener('submit', function (evt) {
+    validateHashtags(inputHashtag.value);
+    window.backend.save(new FormData(form), window.backend.onSuccess, window.backend.errorHandler);
+    evt.preventDefault();
+    uploadInput.value = null;
   });
 
   // ---Наложение фильтров
@@ -57,7 +106,7 @@
   };
 
   var applyFilter = function (targetId) {
-    if (targetId === "upload-effect-none") {
+    if (targetId === 'upload-effect-none') {
       uploadLevelElement.classList.add('hidden');
     } else {
       uploadLevelElement.classList.remove('hidden');
@@ -72,15 +121,13 @@
 
   var scaleElement = document.querySelector('.upload-resize-controls');
 
-  var adjustScale = function(scale) {
+  var adjustScale = function (scale) {
     imagePreview.style.transform = 'scale(' + scale / 100 + ')';
   };
 
   window.initializeScale(scaleElement, adjustScale);
 
   // ---Валидация хэш-тэгов
-
-  var inputHashtag = document.querySelector('.upload-form-hashtags');
 
   var validateHashtags = function (value) {
     var MAX_HASHTAGS = 5;
@@ -95,7 +142,7 @@
       errorMessage += 'Не больше 5 хэш-тегов.\n';
     }
 
-    for (i = 0; i < array.length; i++) {
+    for (var i = 0; i < array.length; i++) {
       if (array[i].length > MAX_LENGTH_HASHTAG) {
         errorMessage += 'Длина хэш-тега не больше 20 символов.\n';
         break;
@@ -126,6 +173,7 @@
 
     if (errorMessage) {
       inputHashtag.setCustomValidity(errorMessage);
+      inputHashtag.style.borderColor = 'red';
     } else {
       inputHashtag.setCustomValidity('');
       inputHashtag.style.border = '';
@@ -139,7 +187,7 @@
 
   // Ползунок фильтров
 
-  function getCoordsScope (elem) {
+  function getCoordsScope(elem) {
     var box = elem.getBoundingClientRect();
 
     return {
@@ -148,11 +196,11 @@
     };
   }
 
-  function getCoordsPin (mouseX) {
+  function getCoordsPin(mouseX) {
     var scopeEffectLevelPin = getCoordsScope(scopeElement);
     var newPercent = (mouseX - scopeEffectLevelPin.left) * 100 / (scopeEffectLevelPin.right - scopeEffectLevelPin.left);
 
-    if(newPercent > 0 && newPercent < 100) {
+    if (newPercent > 0 && newPercent < 100) {
       effectLevelPinElement.style.left = newPercent + '%';
       effectLevelLineElement.style.width = newPercent + '%';
       uploadLevelInputElement.value = Math.round(newPercent);
