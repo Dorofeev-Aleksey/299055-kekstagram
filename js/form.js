@@ -58,6 +58,7 @@
     uploadFormDescription.value = '';
     inputEffectNone.checked = true;
     inputHashtag.style.border = '';
+    inputHashtag.setCustomValidity('');
   };
 
   var openOverlay = function () {
@@ -72,6 +73,7 @@
     uploadOverlay.classList.add('hidden');
     setDefaultForm();
     clearEffect();
+  //  inputHashtag.setCustomValidity = '';
     document.removeEventListener('keydown', onOverlayEscPress);
   };
 
@@ -182,7 +184,6 @@
       inputHashtag.setCustomValidity('');
       inputHashtag.style.border = '';
     }
-
   };
 
   inputHashtag.addEventListener('input', function () {
