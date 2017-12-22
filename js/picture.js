@@ -9,7 +9,7 @@
 
       pictureElement.querySelector('.picture img').src = photo.url;
       pictureElement.querySelector('.picture-likes').textContent = photo.likes;
-      pictureElement.querySelector('.picture-comments').textContent = photo.commets;
+      pictureElement.querySelector('.picture-comments').textContent = photo.comments.length;
 
       return pictureElement;
     }
