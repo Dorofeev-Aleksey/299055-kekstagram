@@ -76,7 +76,6 @@
   };
 
   uploadInput.addEventListener('change', function () {
-    console.log()
     setDefaultForm();
     clearEffect();
     openOverlay();
@@ -144,7 +143,7 @@
     }
 
     for (var i = 0; i < array.length; i++) {
-      if (array[0].length === 0) {
+      if (array[i].length === 0) {
         break;
       }
 
