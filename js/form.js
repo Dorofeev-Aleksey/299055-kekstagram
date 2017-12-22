@@ -73,7 +73,6 @@
     uploadOverlay.classList.add('hidden');
     setDefaultForm();
     clearEffect();
-  //  inputHashtag.setCustomValidity = '';
     document.removeEventListener('keydown', onOverlayEscPress);
   };
 
