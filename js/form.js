@@ -76,6 +76,7 @@
   };
 
   uploadInput.addEventListener('change', function () {
+    console.log()
     setDefaultForm();
     clearEffect();
     openOverlay();
@@ -143,6 +144,10 @@
     }
 
     for (var i = 0; i < array.length; i++) {
+      if (array[0].length === 0) {
+        break;
+      }
+
       if (array[i].length > MAX_LENGTH_HASHTAG) {
         errorMessage += 'Длина хэш-тега не больше 20 символов.\n';
         break;
