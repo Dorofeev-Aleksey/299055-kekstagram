@@ -1,14 +1,14 @@
 'use strict';
 
 (function () {
+  var STEP_RESIZE = 25;
+  var MIN_RESIZE = 25;
+  var MAX_RESIZE = 100;
+
   window.initializeScale = function (scaleElement, callback) {
     var buttonResizeDec = scaleElement.querySelector('.upload-resize-controls-button-dec');
     var buttonResizeInc = scaleElement.querySelector('.upload-resize-controls-button-inc');
     var controlSizeValue = scaleElement.querySelector('.upload-resize-controls-value');
-
-    var STEP_RESIZE = 25;
-    var MIN_RESIZE = 25;
-    var MAX_RESIZE = 100;
 
     var buttonResizeClickHandler = function (evt) {
       var step = STEP_RESIZE;

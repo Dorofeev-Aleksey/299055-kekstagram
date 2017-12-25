@@ -93,10 +93,10 @@
     closeOverlay();
   });
 
-  var onUploadFileChange = function() {
+  var onUploadFileChange = function () {
     var file = uploadInput.files[0];
     window.uploadPicture(file, imagePreview, openOverlay);
-  }
+  };
 
   var form = document.querySelector('.upload-form');
   form.addEventListener('submit', function (evt) {
@@ -205,7 +205,7 @@
       left: box.left,
       right: box.right
     };
-  }
+  };
 
   var getCoordsPin = function (mouseX) {
     var scopeEffectLevelPin = getCoordsScope(scopeElement);
@@ -217,7 +217,7 @@
       uploadLevelInputElement.value = Math.round(newPercent);
     }
     return newPercent;
-  }
+  };
 
   function checkFilter(newPercent) {
     var filterElements = uploadControlsElement.querySelectorAll('input[type="radio"]');
