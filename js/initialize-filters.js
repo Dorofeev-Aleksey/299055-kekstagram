@@ -15,6 +15,7 @@
 
           var effectButtonsId = evt.target.id;
           applyFilter(effectButtonsId);
+          break;
         }
       }
     };

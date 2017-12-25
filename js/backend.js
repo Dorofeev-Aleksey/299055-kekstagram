@@ -58,7 +58,7 @@
       uploadOverlay.classList.add('hidden');
     },
 
-    errorHandler: function (alertMessage) {
+    onError: function (alertMessage) {
       var node = document.createElement('div');
       node.className = 'form-alert';
 

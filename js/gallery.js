@@ -79,18 +79,18 @@
   }
 
   function cleanOldPictures() {
-    for (var l = 0; l <= pictureItems.length - 1; l++) {
-      pictureItems[l].removeEventListener('click', openPhotoHandler);
-    }
+    pictureItems.forEach(function (element, index, array) {
+      element.removeEventListener('click', openPhotoHandler);
+    });
     picturesList.innerHTML = '';
   }
 
   function insertingNewPictures() {
     var pictures = changeFilterSort(window.pictures.slice());
     var fragment = document.createDocumentFragment();
-    for (var j = 0; j < pictures.length; j++) {
-      fragment.appendChild(window.picture.renderPhoto(pictures[j]));
-    }
+    pictures.forEach(function (element, index, array) {
+      fragment.appendChild(window.picture.renderPhoto(element));
+    });
     picturesList.appendChild(fragment);
   }
 
@@ -98,9 +98,9 @@
     cleanOldPictures();
     insertingNewPictures();
     pictureItems = document.querySelectorAll('.picture');
-    for (var k = 0; k <= pictureItems.length - 1; k++) {
-      pictureItems[k].addEventListener('click', openPhotoHandler);
-    }
+    pictureItems.forEach(function (element, index, array) {
+      element.addEventListener('click', openPhotoHandler);
+    });
   }
 
   function successRenderPhotoHandler(pictures) {
@@ -113,7 +113,7 @@
     window.debounce(updatePictures);
   });
 
-  window.backend.load(successRenderPhotoHandler, window.backend.errorHandler);
+  window.backend.load(successRenderPhotoHandler, window.backend.onError);
 
   var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
 

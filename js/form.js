@@ -1,6 +1,14 @@
 'use strict';
 
 (function () {
+
+  var MAX_HASHTAGS = 5;
+  var MAX_LENGTH_HASHTAG = 20;
+  var MIN_LENGTH_HASHTAG = 2;
+  var MAX_EFFECT_VALUE = 100;
+  var MIN_EFFECT_VALUE = 0;
+  var DEFAULT_EFFECT_VALUE = 100;
+
   var uploadInput = document.querySelector('.upload-input');
   var uploadOverlay = document.querySelector('.upload-overlay');
   var uploadFormCancel = document.querySelector('.upload-form-cancel');
@@ -16,10 +24,6 @@
   var uploadOverlayCloseBtn = uploadOverlay.querySelector('.upload-form-cancel');
   var inputHashtag = document.querySelector('.upload-form-hashtags');
   var inputEffectNone = document.querySelector('#upload-effect-none');
-
-  var MAX_EFFECT_VALUE = 100;
-  var MIN_EFFECT_VALUE = 0;
-  var DEFAULT_EFFECT_VALUE = 100;
 
   uploadLevelInputElement.classList.add('hidden');
   uploadOverlayCloseBtn.setAttribute('style', 'font-size: 0;');
@@ -77,6 +81,7 @@
   };
 
   uploadInput.addEventListener('change', function () {
+    onUploadFileChange();
     setDefaultForm();
     clearEffect();
     openOverlay();
@@ -88,10 +93,15 @@
     closeOverlay();
   });
 
+  var onUploadFileChange = function() {
+    var file = uploadInput.files[0];
+    window.uploadPicture(file, imagePreview, openOverlay);
+  }
+
   var form = document.querySelector('.upload-form');
   form.addEventListener('submit', function (evt) {
     validateHashtags(inputHashtag.value);
-    window.backend.save(new FormData(form), window.backend.onSuccess, window.backend.errorHandler);
+    window.backend.save(new FormData(form), window.backend.onSuccess, window.backend.onError);
     evt.preventDefault();
     uploadInput.value = null;
   });
@@ -131,9 +141,6 @@
   // ---Валидация хэш-тэгов
 
   var validateHashtags = function (value) {
-    var MAX_HASHTAGS = 5;
-    var MAX_LENGTH_HASHTAG = 20;
-    var MIN_LENGTH_HASHTAG = 2;
     var errorMessage = '';
 
     value = value.toLowerCase();
@@ -191,7 +198,7 @@
 
   // Ползунок фильтров
 
-  function getCoordsScope(elem) {
+  var getCoordsScope = function (elem) {
     var box = elem.getBoundingClientRect();
 
     return {
@@ -200,7 +207,7 @@
     };
   }
 
-  function getCoordsPin(mouseX) {
+  var getCoordsPin = function (mouseX) {
     var scopeEffectLevelPin = getCoordsScope(scopeElement);
     var newPercent = (mouseX - scopeEffectLevelPin.left) * 100 / (scopeEffectLevelPin.right - scopeEffectLevelPin.left);
 

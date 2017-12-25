@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
-  var galleryOverlay = document.querySelector('.gallery-overlay');
   var ESC_KEYCODE = 27;
+  var ENTER_KEYCODE = 13;
+  var galleryOverlay = document.querySelector('.gallery-overlay');
 
   function getMatchStr(object, pictures) {
     for (var i = 0; i < pictures.length; i++) {
@@ -42,6 +43,6 @@
       galleryOverlay.querySelector('.comments-count').textContent = matchStr[0];
     },
     ESC_KEYCODE: ESC_KEYCODE,
-    ENTER_KEYCODE: 13
+    ENTER_KEYCODE: ENTER_KEYCODE
   };
 })();
