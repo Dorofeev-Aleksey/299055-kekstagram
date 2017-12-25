@@ -79,7 +79,7 @@
   }
 
   function cleanOldPictures() {
-    pictureItems.forEach(function (element, index) {
+    pictureItems.forEach(function (element) {
       element.removeEventListener('click', openPhotoHandler);
     });
     picturesList.innerHTML = '';
@@ -88,7 +88,7 @@
   function insertingNewPictures() {
     var pictures = changeFilterSort(window.pictures.slice());
     var fragment = document.createDocumentFragment();
-    pictures.forEach(function (element, index) {
+    pictures.forEach(function (element) {
       fragment.appendChild(window.picture.renderPhoto(element));
     });
     picturesList.appendChild(fragment);
@@ -98,7 +98,7 @@
     cleanOldPictures();
     insertingNewPictures();
     pictureItems = document.querySelectorAll('.picture');
-    pictureItems.forEach(function (element, index) {
+    pictureItems.forEach(function (element) {
       element.addEventListener('click', openPhotoHandler);
     });
   }
