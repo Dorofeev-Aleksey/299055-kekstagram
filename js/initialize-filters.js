@@ -6,16 +6,14 @@
     var effectButtons = effectContainer.querySelectorAll('.upload-effect-input');
 
     var onEffectPress = function (evt) {
-      for (i = 0; i < effectButtons.length; i++) {
-
-        if (evt.target.checked) {
+    	if (evt.target.checked) {
+      	for (i = 0; i < effectButtons.length; i++) {
           var newPercent = 100;
           callback(newPercent);
           filterDefault(newPercent);
 
           var effectButtonsId = evt.target.id;
           applyFilter(effectButtonsId);
-          break;
         }
       }
     };
