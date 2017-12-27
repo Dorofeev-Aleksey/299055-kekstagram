@@ -15,7 +15,7 @@
       }
     }
     return [0, 0];
-  }
+  };
 
   window.preview = {
     onPopupEscPress: function (evt) {
