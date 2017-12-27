@@ -12,7 +12,7 @@
       return second.likes - first.likes;
     });
     return sortedArray;
-  }
+  };
 
   var sortFilterComments = function (pictures) {
     var sortedArray = pictures;
@@ -20,7 +20,7 @@
       return second.comments.length - first.comments.length;
     });
     return sortedArray;
-  }
+  };
 
   var sortFilterRandomize = function (pictures) {
     var sortedArray = pictures;
@@ -28,7 +28,7 @@
       return Math.random() - 0.5;
     });
     return sortedArray;
-  }
+  };
 
   var changeFilterSort = function (pictures) {
     var filterSortElements = document.querySelectorAll('.filters input[type="radio"]');
@@ -55,35 +55,35 @@
       }
     }
     return filterSort;
-  }
+  };
 
   var closeSlider = function () {
     galleryOverlayElement.classList.add('hidden');
     document.removeEventListener('keydown', sliderEscPressHandler);
-  }
+  };
 
   var sliderEscPressHandler = function (evt) {
     window.util.isEscEvent(evt, closeSlider);
-  }
+  };
 
   var openSlider = function () {
     galleryOverlayElement.classList.remove('hidden');
     document.addEventListener('keydown', sliderEscPressHandler);
-  }
+  };
 
   var openPhotoHandler = function (evt) {
     evt.preventDefault();
     var el = evt.currentTarget.children[0];
     window.preview.renderMainPhoto(el, window.pictures);
     openSlider();
-  }
+  };
 
   var cleanOldPictures = function () {
     pictureItems.forEach(function (element) {
       element.removeEventListener('click', openPhotoHandler);
     });
     picturesList.innerHTML = '';
-  }
+  };
 
   var insertingNewPictures = function () {
     var pictures = changeFilterSort(window.pictures.slice());
@@ -92,7 +92,7 @@
       fragment.appendChild(window.picture.renderPhoto(element));
     });
     picturesList.appendChild(fragment);
-  }
+  };
 
   var updatePictures = function () {
     cleanOldPictures();
@@ -101,13 +101,13 @@
     pictureItems.forEach(function (element) {
       element.addEventListener('click', openPhotoHandler);
     });
-  }
+  };
 
   var successRenderPhotoHandler = function (pictures) {
     window.pictures = pictures; // первоначальный массив картинок
     filterForm.classList.remove('filters-inactive');
     updatePictures();
-  }
+  };
 
   filterForm.addEventListener('change', function () {
     window.debounce(updatePictures);
