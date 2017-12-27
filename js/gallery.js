@@ -6,7 +6,7 @@
   var filterForm = document.querySelector('.filters');
   var pictureItems = document.querySelectorAll('.picture');
 
-  function sortFilterLikes(pictures) {
+  var sortFilterLikes = function (pictures) {
     var sortedArray = pictures;
     sortedArray.sort(function (first, second) {
       return second.likes - first.likes;
@@ -14,7 +14,7 @@
     return sortedArray;
   }
 
-  function sortFilterComments(pictures) {
+  var sortFilterComments = function (pictures) {
     var sortedArray = pictures;
     sortedArray.sort(function (first, second) {
       return second.comments.length - first.comments.length;
@@ -22,7 +22,7 @@
     return sortedArray;
   }
 
-  function sortFilterRandomize(pictures) {
+  var sortFilterRandomize = function (pictures) {
     var sortedArray = pictures;
     sortedArray.sort(function () {
       return Math.random() - 0.5;
@@ -30,7 +30,7 @@
     return sortedArray;
   }
 
-  function changeFilterSort(pictures) {
+  var changeFilterSort = function (pictures) {
     var filterSortElements = document.querySelectorAll('.filters input[type="radio"]');
     for (var i = 0; i < filterSortElements.length; i++) {
       if (filterSortElements[i].checked) {
@@ -57,35 +57,35 @@
     return filterSort;
   }
 
-  function closeSlider() {
+  var closeSlider = function () {
     galleryOverlayElement.classList.add('hidden');
     document.removeEventListener('keydown', sliderEscPressHandler);
   }
 
-  function sliderEscPressHandler(evt) {
+  var sliderEscPressHandler = function (evt) {
     window.util.isEscEvent(evt, closeSlider);
   }
 
-  function openSlider() {
+  var openSlider = function () {
     galleryOverlayElement.classList.remove('hidden');
     document.addEventListener('keydown', sliderEscPressHandler);
   }
 
-  function openPhotoHandler(evt) {
+  var openPhotoHandler = function (evt) {
     evt.preventDefault();
     var el = evt.currentTarget.children[0];
     window.preview.renderMainPhoto(el, window.pictures);
     openSlider();
   }
 
-  function cleanOldPictures() {
+  var cleanOldPictures = function () {
     pictureItems.forEach(function (element) {
       element.removeEventListener('click', openPhotoHandler);
     });
     picturesList.innerHTML = '';
   }
 
-  function insertingNewPictures() {
+  var insertingNewPictures = function () {
     var pictures = changeFilterSort(window.pictures.slice());
     var fragment = document.createDocumentFragment();
     pictures.forEach(function (element) {
@@ -94,7 +94,7 @@
     picturesList.appendChild(fragment);
   }
 
-  function updatePictures() {
+  var updatePictures = function () {
     cleanOldPictures();
     insertingNewPictures();
     pictureItems = document.querySelectorAll('.picture');
@@ -103,7 +103,7 @@
     });
   }
 
-  function successRenderPhotoHandler(pictures) {
+  var successRenderPhotoHandler = function (pictures) {
     window.pictures = pictures; // первоначальный массив картинок
     filterForm.classList.remove('filters-inactive');
     updatePictures();

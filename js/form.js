@@ -126,6 +126,39 @@
     imagePreview.classList.add(targetId);
   };
 
+  var checkFilter = function (newPercent) {
+    var filterElements = uploadControlsElement.querySelectorAll('input[type="radio"]');
+    for (var i = 0; i < filterElements.length; i++) {
+      if (filterElements[i].checked) {
+        var filter = filterElements[i].value;
+        var filterValue;
+
+        switch (filter) {
+          case 'none':
+            filterValue = 'none';
+            break;
+          case 'chrome':
+            filterValue = 'grayscale(' + String(parseFloat(newPercent / 100).toFixed(2)) + ')';
+            break;
+          case 'sepia':
+            filterValue = 'sepia(' + String(parseFloat(newPercent / 100).toFixed(2)) + ')';
+            break;
+          case 'marvin':
+            filterValue = 'invert(' + String(newPercent) + '%)';
+            break;
+          case 'phobos':
+            filterValue = 'blur(' + String(Math.round((newPercent * 3) / 100)) + 'px)';
+            break;
+          case 'heat':
+            filterValue = 'brightness(' + String(parseFloat((newPercent * 3) / 100).toFixed(1)) + ')';
+            break;
+        }
+        imagePreview.style.filter = filterValue;
+        return;
+      }
+    }
+  };
+
   window.initializeFilters(effectContainer, checkFilter, filterDefault, applyFilter);
 
   // ---Изменение масштаба изображения
@@ -218,39 +251,6 @@
     }
     return newPercent;
   };
-
-  function checkFilter(newPercent) {
-    var filterElements = uploadControlsElement.querySelectorAll('input[type="radio"]');
-    for (var i = 0; i < filterElements.length; i++) {
-      if (filterElements[i].checked) {
-        var filter = filterElements[i].value;
-        var filterValue;
-
-        switch (filter) {
-          case 'none':
-            filterValue = 'none';
-            break;
-          case 'chrome':
-            filterValue = 'grayscale(' + String(parseFloat(newPercent / 100).toFixed(2)) + ')';
-            break;
-          case 'sepia':
-            filterValue = 'sepia(' + String(parseFloat(newPercent / 100).toFixed(2)) + ')';
-            break;
-          case 'marvin':
-            filterValue = 'invert(' + String(newPercent) + '%)';
-            break;
-          case 'phobos':
-            filterValue = 'blur(' + String(Math.round((newPercent * 3) / 100)) + 'px)';
-            break;
-          case 'heat':
-            filterValue = 'brightness(' + String(parseFloat((newPercent * 3) / 100).toFixed(1)) + ')';
-            break;
-        }
-        imagePreview.style.filter = filterValue;
-        return;
-      }
-    }
-  }
 
   effectLevelPinElement.addEventListener('mousedown', function (event) {
     event.preventDefault();

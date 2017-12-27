@@ -5,7 +5,7 @@
   var ENTER_KEYCODE = 13;
   var galleryOverlay = document.querySelector('.gallery-overlay');
 
-  function getMatchStr(object, pictures) {
+  var getMatchStr = function (object, pictures) {
     for (var i = 0; i < pictures.length; i++) {
       var str = object.src;
       var reg = pictures[i];

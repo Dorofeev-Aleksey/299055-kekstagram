@@ -7,7 +7,6 @@
 
     var onEffectPress = function (evt) {
       if (evt.target.checked) {
-        for (i = 0; i < effectButtons.length; i++) {
           var newPercent = 100;
           callback(newPercent);
           filterDefault(newPercent);
@@ -15,7 +14,6 @@
           var effectButtonsId = evt.target.id;
           applyFilter(effectButtonsId);
         }
-      }
     };
 
     for (var i = 0; i < effectButtons.length; i++) {
